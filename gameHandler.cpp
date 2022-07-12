@@ -1,5 +1,6 @@
 #include "gameHandler.h"
 #include <iostream>
+#include<string>
 
 
 bool gameHandler::checkNumbers(char c)
@@ -15,11 +16,6 @@ bool gameHandler::chceckLetters(char c) {
     return false;
 }
 
-//int gameHandler::coordinatesVerificator(int y, int x)
-//{
-//    
-//}
-
 void gameHandler::getCoordinates(int* y, int* x) {
     std::string coordinates;
     while (true) {
@@ -32,25 +28,34 @@ void gameHandler::getCoordinates(int* y, int* x) {
             std::cin.ignore();
             continue;
         }
-
-        if (coordinates.size() != 2) {
-            std::cout << "Enter one letter and one digit each" << std::endl;
+        //sprawdzam czy jest litera i conajwyzej 2cyfry
+        if (coordinates.size() >3) {
+            std::cout << "Enter one letter and number" << std::endl;
             continue;
         }
-
+        //sprawdzam czy litera jest pierwsza
         else if (chceckLetters(coordinates[0]) == 0) {
             std::cout << "Input a letter (the size of the letter is irrelevant)!" << std::endl;
             continue;
         }
-
+        //sprawdzam czy na drugim miejscu jest cyfra
         else if (checkNumbers(coordinates[1]) == 0) {
-            std::cout << "Input a proper number beetwen 1 and 9!" << std::endl;
+            std::cout << "Input a proper number!" << std::endl;
             continue;
         }
+        //jak wyzej
+        else if (checkNumbers(coordinates[2]) == 0)
+            continue;
+
         break;
     }
-    //
-    *y = toupper(coordinates[0]) - 65;
-    *x = coordinates[1] - 48;
+
+    std::string number;
+    int num;
+    number += coordinates[1];
+    number += coordinates[2];
+    num = stoi(number) - 1;//zmiana typu zmiennej (string do int)
+    *y = toupper(coordinates[0]) - 65;//zmiana litery na odpowiednia cyfre
+    *x = num;
     
 }
