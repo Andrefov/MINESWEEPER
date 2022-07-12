@@ -1,6 +1,39 @@
-#include "gameHandler.h"
 #include <iostream>
 #include<string>
+#include"board.h"
+#include "gameHandler.h"
+#include "tile.h"
+
+
+void gameHandler::markMine(int y, int x, Board myBoard)
+{
+    Tile* t = myBoard.getTile(y, x);
+    t->setStatus(9);
+}
+
+void gameHandler::action(Board myBoard)
+{
+    std::string action;
+    std::cout << "What do you want to do? Type \"discover\" to discover the field or \"mark\" to marka a filed as flag" << std::endl;
+    while (true) {
+        std::cout << ">>";
+        std::cin >> action;
+
+        if ((action == "discover") || (action == "d")) {
+            getCoordinates(&y, &x);
+            //metoda odkrywajaca pola
+        }
+        else if ((action == "mark") || (action == "m")) {
+            getCoordinates(&y, &x);
+            markMine(x, y,myBoard);
+        }
+        else {
+            std::cout << "Invalid input. Try again!" << std::endl;
+            continue;
+        }
+    }
+    
+}
 
 
 bool gameHandler::checkNumbers(char c)
@@ -15,6 +48,7 @@ bool gameHandler::chceckLetters(char c) {
         return true;
     return false;
 }
+
 
 void gameHandler::getCoordinates(int* y, int* x) {
     std::string coordinates;

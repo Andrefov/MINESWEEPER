@@ -1,5 +1,5 @@
 #include "Board.h"
-
+#include"tile.h"
 
 Board::Board(int y, int x, int size, int minesNumber) {
 	std::random_device rng;																	//
