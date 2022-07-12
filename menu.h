@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include <windows.h>
+
 class menu
 {
 public:
@@ -11,5 +13,8 @@ public:
 	void levels();
 	void levelChoosing(int levelchoice);
 	void aboutTheGame();
-};
+	void displayMenu();
 
+private:
+	int minesQuant, boardSize; //=mines quantity, size of a board's side
+};

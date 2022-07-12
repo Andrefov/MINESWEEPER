@@ -75,7 +75,7 @@ int menu::getChoice(int displaySelector) {
 
 void menu::levelChoosing(int levelchoice) {
 	switch (levelchoice) {
-	case 1:
+	case 1: 
 		//begginer mode
 		minesQuant = 10;
 		boardSize = 9;
