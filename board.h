@@ -1,37 +1,26 @@
 #include <array>
 #include <random>
 #include <iostream>
+#include <algorithm>
 #include "tile.h"
 
 class Board {
 private:
+	struct coordinates
+	{
+		int y;
+		int x;
+	};
 	int size_;
-	std::array<std::array <tile, const size_>,const size_> board;
-	//vector typu struct (int y, int x)
-
+	int minesNumber;
+	std::vector<std::vector <Tile>> board;
+	std::vector<coordinates> mines;
+	
 public:
-	Board(int y, int x);
 	void displayBoard();
 	//konstruktor kopiuj¹cy
-	// konstruktor parametryczny (wylosuje miny)
-	tile* getTile(int y, int x);
-	void setTilesAround(int y, int x);
-	
+	Board(int y, int x, int size, int minesNumber);
+	Tile* getTile(int y, int x);
+	void setTilesAround();
 	void fieldReveal();
-
 };
-
-Board::Board(int y, int x) {
-	std::cout << "tworzenie tablicy..."
-		// pêtla dla iloœci min
-		// 
-		//random generator
-		// jezeli koordynaty == gracz losuj dalej 
-
-		board[][]
-
-
-
-
-
-}
