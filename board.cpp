@@ -50,25 +50,25 @@ void Board::setTilesAround() {
 void Board::fieldReveal(int x, int y)
 {
 	Tile* t = board.getTile(x, y);
-	if (t->getStatus() == 1) {
-		return;
-	}
+	if (t->getStatus() != 1) {
 
-	t->setStatus(1);
+		t->setStatus(1);
 
-	if (t->getTileType() == 0 && t->getMinesNearby() == 0) {
+		if (t->getTileType() == 0 && t->getMinesNearby() == 0) {
 
-		for (int i = x - 1; i <= x + 1; i++) {
-			for (int j = y - 1; j <= y + 1; j++) {
-				if (   i >= 0 && i < size_ 
-					&& j >= 0 && j < size_
-					&& !(i == x && j == y)) {
+			for (int i = x - 1; i <= x + 1; i++) {
+				for (int j = y - 1; j <= y + 1; j++) {
+					if (i >= 0 && i < size_
+						&& j >= 0 && j < size_
+						&& !(i == x && j == y)) {
 						fieldReveal(i, j);
 					}
 				}
 			}
 		}
 	}
+	
+
 }
 
 
