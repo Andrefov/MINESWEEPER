@@ -1,7 +1,4 @@
 ﻿#include "menu.h"
-#include <iostream>
-#include <windows.h>
-
 
 void menu::welcomeSign() {
 
@@ -26,25 +23,11 @@ void menu::mainMenu() {
 	std::cout << "*********************************************************\n";
 }
 
-void menu::getChoice() {
-	std::cin >> choice;
-	while (true) {
-		welcomeSign();
-		if ((choice == 1 || choice == 2 || choice == 3))
-			break;
-		else {
-			std::cout << "Wrong input, try again\n";
-			system("pause");
-			system("cls");
-		}
-	}
-}
-
 void menu::menuChoice(int choice) {
 
 	switch (choice) {
 	case 1:
-		levels();
+		levelChoosing(getChoice(1));
 	case 2:
 		aboutTheGame();
 		break; 
@@ -71,18 +54,41 @@ void menu::levels() {
 	std::cout << "*********************************************************\n";
 }
 
+int menu::getChoice(int displaySelector) {
+	while (true) {
+		if (displaySelector == 0) {
+			mainMenu();
+		}
+		else if (displaySelector == 1) {
+			levels();
+		}
+		std::cin >> choice;
+		if ((choice == 1 || choice == 2 || choice == 3))
+			return choice;
+		else {
+			std::cout << "Wrong input, try again\n";
+			system("pause");
+			system("cls");
+		}
+	}
+}
 
 void menu::levelChoosing(int levelchoice) {
-	//czy to już ma być w gamehandlerze?
 	switch (levelchoice) {
-	case 1:
+	case 1: 
 		//begginer mode
+		minesQuant = 10;
+		boardSize = 9;
 		break;
 	case 2:
 		//intermediate mode
+		minesQuant = 40;
+		boardSize = 16;
 		break;
 	case 3:
 		//advanced mode
+		minesQuant = 99;
+		boardSize = 24;
 		break;
 	}
 }
@@ -100,3 +106,8 @@ void menu::aboutTheGame()
 }
 
 
+void menu::displayMenu()
+{
+	mainMenu();
+	menuChoice(getChoice(0));
+}
