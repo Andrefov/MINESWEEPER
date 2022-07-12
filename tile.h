@@ -1,5 +1,5 @@
 #pragma once
-class tile
+class Tile
 {
 private:
 	int minesNearby;
@@ -12,4 +12,5 @@ public:
 	void setTileType(int isBomb);
 	int getStatus();
 	void setStatus(int choosenStatus);// 0 - zakryta, 1 - odkryta, 9 - flaga
+	Tile();
 };

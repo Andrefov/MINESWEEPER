@@ -1,33 +1,38 @@
 #include "tile.h"
 
-int tile::getMinesNearby()
+int Tile::getMinesNearby()
 {
 	return minesNearby;
 }
 
-void tile::setMinesNearby(int amount)
+void Tile::setMinesNearby(int amount)
 {
 	minesNearby = amount;
 }
 
-int tile::getTileType()
+int Tile::getTileType()
 {
 	return tileType;
 }
 
-void tile::setTileType(int isBomb)
+void Tile::setTileType(int isBomb)
 {
 	tileType = isBomb;
 
 }
 
-int tile::getStatus()
+int Tile::getStatus()
 {
 	return status;
 }
 
-void tile::setStatus(int choosenStatus)
+void Tile::setStatus(int choosenStatus)
 {
 	status = choosenStatus;
 }
 
+Tile::Tile() :
+	tileType(0),
+	minesNearby(0),
+	status(0)
+{};
