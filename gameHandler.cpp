@@ -1,5 +1,43 @@
-#include "gameHandler.h"
 #include <iostream>
+#include<string>
+#include"board.h"
+#include "gameHandler.h"
+#include "tile.h"
+
+
+void gameHandler::markMine(int y, int x, Board* myBoard, int status)
+{
+    Tile* t = myBoard->getTile(y, x);
+    t->setStatus(status);
+}
+
+void gameHandler::action(Board* myBoard)
+{
+    std::string action;
+    std::cout << "What do you want to do? Type \"discover\" to discover the field, \"mark\" to marka a filed as flag or \"unmark\" to unmark the field" << std::endl;
+    while (true) {
+        std::cout << ">>";
+        std::cin >> action;
+
+        if ((action == "discover") || (action == "d")) {
+            getCoordinates(&y, &x);
+            //metoda odkrywajaca pola
+        }
+        else if ((action == "mark") || (action == "m")) {
+            getCoordinates(&y, &x);
+            markMine(x, y,myBoard, 9);
+        }
+        else if ((action == "unmark") || (action == "u")) {
+            getCoordinates(&y, &x);
+            markMine(x, y, myBoard, 0);
+        }
+        else {
+            std::cout << "Invalid input. Try again!" << std::endl;
+            continue;
+        }
+    }
+    
+}
 
 
 bool gameHandler::checkNumbers(char c)
@@ -15,10 +53,6 @@ bool gameHandler::chceckLetters(char c) {
     return false;
 }
 
-//int gameHandler::coordinatesVerificator(int y, int x)
-//{
-//    
-//}
 
 void gameHandler::getCoordinates(int* y, int* x) {
     std::string coordinates;
@@ -32,26 +66,35 @@ void gameHandler::getCoordinates(int* y, int* x) {
             std::cin.ignore();
             continue;
         }
-
-        if (coordinates.size() != 2) {
-            std::cout << "Enter one letter and one digit each" << std::endl;
+        //sprawdzam czy jest litera i conajwyzej 2cyfry
+        if (coordinates.size() >3) {
+            std::cout << "Enter one letter and number" << std::endl;
             continue;
         }
-
+        //sprawdzam czy litera jest pierwsza
         else if (chceckLetters(coordinates[0]) == 0) {
             std::cout << "Input a letter (the size of the letter is irrelevant)!" << std::endl;
             continue;
         }
-
+        //sprawdzam czy na drugim miejscu jest cyfra
         else if (checkNumbers(coordinates[1]) == 0) {
-            std::cout << "Input a proper number beetwen 1 and 9!" << std::endl;
+            std::cout << "Input a proper number!" << std::endl;
             continue;
         }
+        //jak wyzej
+        else if (checkNumbers(coordinates[2]) == 0)
+            continue;
+
         break;
     }
-    //
-    *y = toupper(coordinates[0]) - 65;
-    *x = coordinates[1] - 48;
+
+    std::string number;
+    int num;
+    number += coordinates[1];
+    number += coordinates[2];
+    num = stoi(number) - 1;//zmiana typu zmiennej (string do int)
+    *y = toupper(coordinates[0]) - 65;//zmiana litery na odpowiednia cyfre
+    *x = num;
     
 }
 

@@ -3,7 +3,7 @@ class Tile
 {
 private:
 	int minesNearby;
-	int tileType;
+	int tileType;// 0 - nie ma bomby, 1 - jest
 	int status; //zakryta, odkryta, flaga
 public:
 	int getMinesNearby();
