@@ -22,5 +22,6 @@ public:
 	Board(int y, int x, int size, int minesNumber);
 	Tile* getTile(int y, int x);
 	void setTilesAround();
-	void fieldReveal();
+	void fieldReveal(int x,int y);
+	vector<> getNeighbors();
 };
