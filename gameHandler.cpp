@@ -5,16 +5,16 @@
 #include "tile.h"
 
 
-void gameHandler::markMine(int y, int x, Board myBoard)
+void gameHandler::markMine(int y, int x, Board* myBoard, int status)
 {
-    Tile* t = myBoard.getTile(y, x);
-    t->setStatus(9);
+    Tile* t = myBoard->getTile(y, x);
+    t->setStatus(status);
 }
 
-void gameHandler::action(Board myBoard)
+void gameHandler::action(Board* myBoard)
 {
     std::string action;
-    std::cout << "What do you want to do? Type \"discover\" to discover the field or \"mark\" to marka a filed as flag" << std::endl;
+    std::cout << "What do you want to do? Type \"discover\" to discover the field, \"mark\" to marka a filed as flag or \"unmark\" to unmark the field" << std::endl;
     while (true) {
         std::cout << ">>";
         std::cin >> action;
@@ -25,7 +25,11 @@ void gameHandler::action(Board myBoard)
         }
         else if ((action == "mark") || (action == "m")) {
             getCoordinates(&y, &x);
-            markMine(x, y,myBoard);
+            markMine(x, y,myBoard, 9);
+        }
+        else if ((action == "unmark") || (action == "u")) {
+            getCoordinates(&y, &x);
+            markMine(x, y, myBoard, 0);
         }
         else {
             std::cout << "Invalid input. Try again!" << std::endl;
