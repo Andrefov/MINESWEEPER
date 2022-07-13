@@ -3,15 +3,15 @@
 #include"board.h"
 #include "gameHandler.h"
 #include "tile.h"
+#include "menu.h"
 
-
-void gameHandler::markMine(int y, int x, Board* myBoard, int status)
+void GameHandler::markMine(int y, int x, Board* myBoard, int status)
 {
     Tile* t = myBoard->getTile(y, x);
     t->setStatus(status);
 }
 
-void gameHandler::action(Board* myBoard)
+void GameHandler::action(Board* myBoard)
 {
     std::string action;
     std::cout << "What do you want to do? Type \"discover\" to discover the field, \"mark\" to marka a filed as flag or \"unmark\" to unmark the field" << std::endl;
@@ -35,26 +35,24 @@ void gameHandler::action(Board* myBoard)
             std::cout << "Invalid input. Try again!" << std::endl;
             continue;
         }
-    }
-    
+    }  
 }
 
-
-bool gameHandler::checkNumbers(char c)
+bool GameHandler::checkNumbers(char c)
 {
     if (c >= '0' && c <= '9')
         return true;
     return false;
 }
 
-bool gameHandler::chceckLetters(char c) {
+bool GameHandler::chceckLetters(char c) {
     if (((c >= 'A') && (c <= 'Z')) || ((c >= 'a') && (c <= 'z')))
         return true;
     return false;
 }
 
 
-void gameHandler::getCoordinates(int* y, int* x) {
+void GameHandler::getCoordinates(int* y, int* x) {
     std::string coordinates;
     while (true) {
         std::cout << "Input coordinates: " << std::endl;
@@ -98,7 +96,7 @@ void gameHandler::getCoordinates(int* y, int* x) {
     
 }
 
-void gameHandler::winningSign() {
+void GameHandler::winningSign() {
 
 	std::cout << std::endl;
 	std::cout << "__   __                                     \n";
@@ -109,7 +107,7 @@ void gameHandler::winningSign() {
 	std::cout << "  \\_/ \\___/  \\__,_|    \\_/\\_/  \\___/ |_| |_|\n";
 	std::cout << "\n";
 }
-void gameHandler::losingSign() {
+void GameHandler::losingSign() {
 
 	std::cout << std::endl;
 	std::cout << "__   __                                 \n";

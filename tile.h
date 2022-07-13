@@ -5,7 +5,7 @@ class Tile
 private:
 	int minesNearby;
 	int tileType;// 0 - nie ma bomby, 1 - jest
-	int status; //zakryta, odkryta, flaga
+	int status; //zakryta, odkryta, flaga lub iloœæ min
 public:
 	int getMinesNearby();
 	void setMinesNearby(int amount);

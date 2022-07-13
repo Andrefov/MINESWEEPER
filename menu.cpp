@@ -1,6 +1,6 @@
 ﻿#include "menu.h"
 
-void menu::welcomeSign() {
+void Menu::welcomeSign() {
 
 	std::cout << std::endl;
 	std::cout << "   (                                                                           \n";
@@ -13,7 +13,7 @@ void menu::welcomeSign() {
 	std::cout << "                                                           |_|                  \n";
 }
 
-void menu::mainMenu() {
+void Menu::mainMenu() {
 
 	welcomeSign();
 	std::cout << "*********************** MENU ****************************\n";
@@ -23,29 +23,33 @@ void menu::mainMenu() {
 	std::cout << "*********************************************************\n";
 }
 
-void menu::menuChoice(int choice) {
-
-	switch (choice) {
-	case 1:
-		levelChoosing(getChoice(1));
-	case 2:
-		aboutTheGame();
-		break;
-	case 3:
-		system("cls");
-		std::cout << " (                     (         )                \n";
-		std::cout << " )\\ )                  )\\ )   ( /(   (        (   \n";
-		std::cout << "(()/(      (     (    (()/(   )\\())  )\\ )    ))\\  \n";
-		std::cout << " /(_))_    )\\    )\\    ((_)) ((_)\\  (()/(   /((_) \n";
-		std::cout << "(_)) __|  ((_)  ((_)   _| |  | |(_)  )(_)) (_))   \n";
-		std::cout << "  | (_ | / _ \\ / _ \\ / _` |  | '_ \\ | || | / -_)  \n";
-		std::cout << "   \\___| \\___/ \\___/ \\__,_|  |_.__/  \\_, | \\___|  \n";
-		std::cout << "                                     |__/         \n";
-		break;
+void Menu::menuChoice() {
+	bool choiceStart = false;
+	while (choiceStart == false) {
+		switch (getChoice(0)) {
+		case 1:
+			levelChoosing();
+			choiceStart = true;
+			break;
+		case 2:
+			aboutTheGame();
+			break;
+		case 3:
+			system("cls");
+			std::cout << " (                     (         )                \n";
+			std::cout << " )\\ )                  )\\ )   ( /(   (        (   \n";
+			std::cout << "(()/(      (     (    (()/(   )\\())  )\\ )    ))\\  \n";
+			std::cout << " /(_))_    )\\    )\\    ((_)) ((_)\\  (()/(   /((_) \n";
+			std::cout << "(_)) __|  ((_)  ((_)   _| |  | |(_)  )(_)) (_))   \n";
+			std::cout << "  | (_ | / _ \\ / _ \\ / _` |  | '_ \\ | || | / -_)  \n";
+			std::cout << "   \\___| \\___/ \\___/ \\__,_|  |_.__/  \\_, | \\___|  \n";
+			std::cout << "                                     |__/         \n";
+			break;
+		}
 	}
 }
 
-void menu::levels() {
+void Menu::levels() {
 	system("cls");
 	std::cout << "****************** DIFFICULTY LEVEL *********************\n";
 	std::cout << "          1 - BEGGINER (9x9 board, 10 mines)              \n";
@@ -54,7 +58,8 @@ void menu::levels() {
 	std::cout << "*********************************************************\n";
 }
 
-int menu::getChoice(int displaySelector) {
+int Menu::getChoice(int displaySelector) {
+	std::string choice;
 	while (true) {
 		if (displaySelector == 0) {
 			mainMenu();
@@ -63,8 +68,9 @@ int menu::getChoice(int displaySelector) {
 			levels();
 		}
 		std::cin >> choice;
-		if ((choice == 1 || choice == 2 || choice == 3))
-			return choice;
+		if ((choice == "1" || choice == "2" || choice == "3")) {
+			return stoi(choice);
+		}	
 		else {
 			std::cout << "Wrong input, try again\n";
 			system("pause");
@@ -73,8 +79,8 @@ int menu::getChoice(int displaySelector) {
 	}
 }
 
-void menu::levelChoosing(int levelchoice) {
-	switch (levelchoice) {
+void Menu::levelChoosing() {
+	switch (getChoice(1)) {
 	case 1:
 		//begginer mode
 		minesQuant = 10;
@@ -93,7 +99,7 @@ void menu::levelChoosing(int levelchoice) {
 	}
 }
 
-void menu::aboutTheGame()
+void Menu::aboutTheGame()
 {
 	std::cout << "\n******************************* ABOUT THE GAME  ***********************************\n\n";
 	std::cout << "You will have to clear a rectangular board containing hidden mines\nwithout detonating any of them. If you choose the cell with the bomb- you die!\n\n";
@@ -106,8 +112,15 @@ void menu::aboutTheGame()
 }
 
 
-void menu::displayMenu()
+void Menu::displayMenu()
 {
-	mainMenu();
-	menuChoice(getChoice(0));
+	menuChoice();
+}
+
+int Menu::getMinesQuant() {
+	return minesQuant;
+}
+
+int Menu::getBoardSize() {
+	return boardSize;
 }

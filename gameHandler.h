@@ -3,7 +3,7 @@
 #include<string>
 #include"board.h"
 
-class gameHandler
+class GameHandler
 {
 	int x;
 	int y;
@@ -13,10 +13,12 @@ public:
 	void getCoordinates(int *y, int *x);
 	bool checkNumbers(char c);
 	bool chceckLetters(char c);
-	void markMine(int y, int x, Board* myBoard,int status); // decrementuje int mines
+	void markMine(int y, int x, Board* myBoard, int status); // decrementuje int mines
 	void action(Board* myBoard);
 	int WinCondition(); // je¿eli mines = 0
 	void winningSign();
 	void losingSign();
+	int prepareRound();
+	int round();
 };
 

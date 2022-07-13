@@ -1,19 +1,22 @@
 #pragma once
 #include <iostream>
+#include <string>
 #include <windows.h>
 
-class menu
+class Menu
 {
 public:
 	int choice, levelchoice;
 	void welcomeSign();
 	void mainMenu();
 	int getChoice(int displaySelector);
-	void menuChoice(int choice);
+	void menuChoice();
 	void levels();
-	void levelChoosing(int levelchoice);
+	void levelChoosing();
 	void aboutTheGame();
 	void displayMenu();
+	int getMinesQuant();
+	int getBoardSize();
 
 private:
 	int minesQuant, boardSize; //=mines quantity, size of a board's side
