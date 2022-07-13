@@ -28,7 +28,7 @@ public:
 	Tile* getTile(int y, int x);
 	void setTilesAround();
 	void fieldReveal(int x,int y);
-	void plantMines(int x, int y, int size, int minesNumber)
+	void plantMines(int x, int y, int size, int minesNumber);
 	//vector<> getNeighbors();
 };
 

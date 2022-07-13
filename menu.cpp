@@ -23,8 +23,8 @@ void Menu::mainMenu() {
 	std::cout << "*********************************************************\n";
 }
 
-int Menu::menuChoice() {
 	bool choiceStart = false;
+int Menu::menuChoice() {
 	while (choiceStart == false) {
 		switch (getChoice(0)) {
 		case 1:
@@ -104,9 +104,9 @@ void Menu::aboutTheGame()
 }
 
 
-void Menu::displayMenu()
+int Menu::displayMenu()
 {
-	menuChoice();
+	return menuChoice();
 }
 
 int Menu::getMinesQuant() {

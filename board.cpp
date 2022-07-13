@@ -4,7 +4,17 @@ void Board::displayBoard() {
 	int firstline = 0;
 	int lastline = 0;
 	int hseparator = 1;
+
+	std::cout << "     ";
+
+	for (int x = 0; x < board.size(); x++) {
+		std::cout << (char)('A' + x) << "   ";
+	}
+	std::cout << std::endl;
 	for (int y = 0; y < board.size(); y++) {
+
+
+
 		for (int x = 0; x < board.size(); x++) { //185 186 187 188 201 202 204
 			if (y == 0 && firstline == 0) {
 				firstLine(y, x);	
@@ -44,7 +54,8 @@ void Board::displayBoard() {
 
 void Board::firstLine(int y, int x) {
 	if (x == 0) {
-		std::cout << char(201) << char(205) << char(205) << char(205);
+
+		std::cout <<"   " << char(201) << char(205) << char(205) << char(205);
 	}
 	else if (x > 0 && x < board.size() - 1) {
 		std::cout << char(203) << char(205) << char(205) << char(205);
@@ -55,7 +66,12 @@ void Board::firstLine(int y, int x) {
 }
 
 void Board::middleLine(int y, int x) {
-	
+	if (x == 0) {
+		if (y+1 < 10)
+			std::cout << y+1 << "  ";
+		else
+			std::cout << y+1 << " ";
+	}
 	std::cout << char(186) << ' ';
 	printTile(y, x);
 	std::cout << ' ';
@@ -67,7 +83,7 @@ void Board::middleLine(int y, int x) {
 void Board::separatorLine(int y, int x) {
 
 	if (x == 0) {
-		std::cout << char(204) << char(205) << char(205) << char(205);
+		std::cout <<"   "<< char(204) << char(205) << char(205) << char(205);
 	}
 	else if (x > 0 && x < board.size() - 1) {
 		std::cout << char(206) << char(205) << char(205) << char(205);
@@ -79,7 +95,7 @@ void Board::separatorLine(int y, int x) {
 
 void Board::lastLine(int y, int x) {
 	if (x == 0) {
-		std::cout << char(200) << char(205) << char(205) << char(205);
+		std::cout <<"   "<< char(200) << char(205) << char(205) << char(205);
 	}
 	else if (x > 0 && x < board.size() - 1) {
 		std::cout << char(202) << char(205) << char(205) << char(205);
@@ -184,6 +200,4 @@ void Board::plantMines(int y, int x, int size, int mines_) {
 			mines.push_back(pushHelper);
 		}
 	}
-}
-
 }
