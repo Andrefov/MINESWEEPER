@@ -21,31 +21,47 @@ void gameHandler::action(Board* myBoard)
 
         if ((action == "discover") || (action == "d")) {
             getCoordinates(&y, &x);
-            //metoda odkrywajaca pola
+            //myBoard->fieldReveal(y, x);
         }
         else if ((action == "mark") || (action == "m")) {
             getCoordinates(&y, &x);
-            markMine(x, y,myBoard, 9);
+            Tile* t = myBoard->getTile(y, x);
+            if (t->getStatus() == 0) {
+                markMine(x, y, myBoard, 9);
+                mines++;
+            }
+            else {
+                std::cout << "You can't mark the discoverd field!" << std::endl;
+                continue;
+            }
         }
         else if ((action == "unmark") || (action == "u")) {
             getCoordinates(&y, &x);
-            markMine(x, y, myBoard, 0);
+            Tile* t = myBoard->getTile(y, x);
+            if (t->getStatus() == 9) {
+                markMine(x, y, myBoard, 0);
+                mines--;
+            }
+            else {
+                std::cout << "You can't unmark the field you didn't mark earlier!" << std::endl;
+                continue;
+            }
         }
-        else if (action == "Exit" || action == "exit")
-            exit(0);
-
         else {
             std::cout << "Invalid input. Try again!" << std::endl;
             continue;
         }
     }
-    
 }
 
-bool gameHandler::loseCondition()
+bool gameHandler::loseCondition(Board* myBoard)
 {
-    
+    Tile* t = myBoard->getTile(y, x);
+    if (t->getTileType() == 1)
+        return true;
+    return false;
 }
+
 
 
 bool gameHandler::checkNumbers(char c)
