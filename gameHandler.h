@@ -16,9 +16,10 @@ public:
 	void markMine(int y, int x, Board* myBoard, int status); // decrementuje int mines
 	void action(Board* myBoard);
 	bool winCondition(); // je¿eli mines = 0
-	bool loseCondition();
+	bool loseCondition(Board* myBoard);
 	void winningSign();
 	void losingSign();
 	int round();
+	
 };
 

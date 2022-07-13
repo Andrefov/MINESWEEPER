@@ -25,20 +25,46 @@ void GameHandler::action(Board* myBoard)
         }
         else if ((action == "mark") || (action == "m")) {
             getCoordinates(&y, &x);
-            markMine(x, y,myBoard, 9);
+            Tile* t = myBoard->getTile(y, x);
+            if (t->getStatus() == 0) {
+                markMine(x, y, myBoard, 9);
+                mines++;
+            }
+            else {
+                std::cout << "You can't mark the discoverd field!" << std::endl;
+                continue;
+            }
         }
         else if ((action == "unmark") || (action == "u")) {
             getCoordinates(&y, &x);
-            markMine(x, y, myBoard, 0);
+            Tile* t = myBoard->getTile(y, x);
+            if (t->getStatus() == 9) {
+                markMine(x, y, myBoard, 0);
+                mines--;
+            }
+            else {
+                std::cout << "You can't unmark the field you didn't mark earlier!" << std::endl;
+                continue;
+            }
         }
         else {
             std::cout << "Invalid input. Try again!" << std::endl;
             continue;
         }
-    }  
+    }
 }
 
-bool GameHandler::checkNumbers(char c)
+bool gameHandler::loseCondition(Board* myBoard)
+{
+    Tile* t = myBoard->getTile(y, x);
+    if (t->getTileType() == 1)
+        return true;
+    return false;
+}
+
+
+
+bool gameHandler::checkNumbers(char c)
 {
     if (c >= '0' && c <= '9')
         return true;
@@ -57,15 +83,12 @@ void GameHandler::getCoordinates(int* y, int* x) {
     while (true) {
         std::cout << "Input coordinates: " << std::endl;
 
-        if (!(std::cin >> coordinates))
-        {
-            std::cout << "Insert a letter than a number" << std::endl;
-            std::cin.clear();
-            std::cin.ignore();
-            continue;
-        }
+        std::cin >> coordinates;
+        if (coordinates == "Exit" || coordinates == "exit")
+            exit(0);
+
         //sprawdzam czy jest litera i conajwyzej 2cyfry
-        if (coordinates.size() >3) {
+        if (coordinates.size() > 3) {
             std::cout << "Enter one letter and number" << std::endl;
             continue;
         }
