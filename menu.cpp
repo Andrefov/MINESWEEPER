@@ -23,7 +23,7 @@ void Menu::mainMenu() {
 	std::cout << "*********************************************************\n";
 }
 
-void Menu::menuChoice() {
+int Menu::menuChoice() {
 	bool choiceStart = false;
 	while (choiceStart == false) {
 		switch (getChoice(0)) {
@@ -35,16 +35,8 @@ void Menu::menuChoice() {
 			aboutTheGame();
 			break;
 		case 3:
-			system("cls");
-			std::cout << " (                     (         )                \n";
-			std::cout << " )\\ )                  )\\ )   ( /(   (        (   \n";
-			std::cout << "(()/(      (     (    (()/(   )\\())  )\\ )    ))\\  \n";
-			std::cout << " /(_))_    )\\    )\\    ((_)) ((_)\\  (()/(   /((_) \n";
-			std::cout << "(_)) __|  ((_)  ((_)   _| |  | |(_)  )(_)) (_))   \n";
-			std::cout << "  | (_ | / _ \\ / _ \\ / _` |  | '_ \\ | || | / -_)  \n";
-			std::cout << "   \\___| \\___/ \\___/ \\__,_|  |_.__/  \\_, | \\___|  \n";
-			std::cout << "                                     |__/         \n";
-			break;
+			goodbye();
+			return 0;
 		}
 	}
 }
@@ -123,4 +115,16 @@ int Menu::getMinesQuant() {
 
 int Menu::getBoardSize() {
 	return boardSize;
+}
+
+void Menu::goodbye() {
+	system("cls");
+	std::cout << " (                     (         )                \n";
+	std::cout << " )\\ )                  )\\ )   ( /(   (        (   \n";
+	std::cout << "(()/(      (     (    (()/(   )\\())  )\\ )    ))\\  \n";
+	std::cout << " /(_))_    )\\    )\\    ((_)) ((_)\\  (()/(   /((_) \n";
+	std::cout << "(_)) __|  ((_)  ((_)   _| |  | |(_)  )(_)) (_))   \n";
+	std::cout << "  | (_ | / _ \\ / _ \\ / _` |  | '_ \\ | || | / -_)  \n";
+	std::cout << "   \\___| \\___/ \\___/ \\__,_|  |_.__/  \\_, | \\___|  \n";
+	std::cout << "                                     |__/         \n";
 }

@@ -21,7 +21,7 @@ void GameHandler::action(Board* myBoard)
 
         if ((action == "discover") || (action == "d")) {
             getCoordinates(&y, &x);
-            //metoda odkrywajaca pola
+            myBoard->fieldReveal(y, x);
         }
         else if ((action == "mark") || (action == "m")) {
             getCoordinates(&y, &x);
@@ -119,3 +119,21 @@ void GameHandler::losingSign() {
 	std::cout << "  Try again!\n";
 
 };
+
+int GameHandler::round() {
+    Menu menu;
+    if (menu.displayMenu() == 0) {
+        menu.goodbye();
+        return 0;
+   }
+    Board board_ (menu.getBoardSize());
+    board_.displayBoard();
+    getCoordinates(&y, &x);
+    board_.plantMines(y, x, menu.getBoardSize(), menu.getMinesQuant());
+    board_.setTilesAround();
+    while (winCondition() == false || loseCondition() == false) {
+        action(&board_);
+    }
+   
+    board_.displayBoard();
+}

@@ -24,10 +24,11 @@ public:
 	void printTile(int y, int x);
 	void separatorLine(int y, int x);
 	void lastLine(int y, int x);
-	Board(int y, int x, int size, int minesNumber);
+	Board(int size);
 	Tile* getTile(int y, int x);
 	void setTilesAround();
-	void fieldReveal(int x,int y, Board *board_);
+	void fieldReveal(int x,int y);
+	void plantMines(int x, int y, int size, int minesNumber)
 	//vector<> getNeighbors();
 };
 

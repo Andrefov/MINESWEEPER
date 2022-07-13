@@ -15,10 +15,10 @@ public:
 	bool chceckLetters(char c);
 	void markMine(int y, int x, Board* myBoard, int status); // decrementuje int mines
 	void action(Board* myBoard);
-	int WinCondition(); // je¿eli mines = 0
+	bool winCondition(); // je¿eli mines = 0
+	bool loseCondition();
 	void winningSign();
 	void losingSign();
-	int prepareRound();
 	int round();
 };
 

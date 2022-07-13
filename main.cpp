@@ -6,12 +6,8 @@
 
 
 int main() {
-	Menu menu;
-	menu.displayMenu();
 	GameHandler  gh;
-	Board board_(5, 5, menu.getBoardSize(), menu.getMinesQuant());
-	board_.setTilesAround();
-	board_.displayBoard();
-
-	return 0;
+	if (gh.round() == 0) {
+		return 0;
+	}
 }
