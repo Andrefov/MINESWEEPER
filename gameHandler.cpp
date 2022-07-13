@@ -42,6 +42,11 @@ void gameHandler::action(Board* myBoard)
     
 }
 
+bool gameHandler::loseCondition()
+{
+    
+}
+
 
 bool gameHandler::checkNumbers(char c)
 {
