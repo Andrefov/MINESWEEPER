@@ -31,6 +31,9 @@ void gameHandler::action(Board* myBoard)
             getCoordinates(&y, &x);
             markMine(x, y, myBoard, 0);
         }
+        else if (action == "Exit" || action == "exit")
+            exit(0);
+
         else {
             std::cout << "Invalid input. Try again!" << std::endl;
             continue;
@@ -59,15 +62,12 @@ void gameHandler::getCoordinates(int* y, int* x) {
     while (true) {
         std::cout << "Input coordinates: " << std::endl;
 
-        if (!(std::cin >> coordinates))
-        {
-            std::cout << "Insert a letter than a number" << std::endl;
-            std::cin.clear();
-            std::cin.ignore();
-            continue;
-        }
+        std::cin >> coordinates;
+        if (coordinates == "Exit" || coordinates == "exit")
+            exit(0);
+
         //sprawdzam czy jest litera i conajwyzej 2cyfry
-        if (coordinates.size() >3) {
+        if (coordinates.size() > 3) {
             std::cout << "Enter one letter and number" << std::endl;
             continue;
         }
