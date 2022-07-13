@@ -15,8 +15,8 @@ public:
 	bool chceckLetters(char c);
 	void markMine(int y, int x, Board* myBoard, int status); // decrementuje int mines
 	void action(Board* myBoard);
-	bool winCondition(); // je¿eli mines = 0
-	bool loseCondition();
+	bool winCondition() { return false; } // je¿eli mines = 0
+	bool loseCondition(){ return false; }
 	void winningSign();
 	void losingSign();
 	int round();

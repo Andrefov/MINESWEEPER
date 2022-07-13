@@ -14,7 +14,7 @@ public:
 	void levels();
 	void levelChoosing();
 	void aboutTheGame();
-	void displayMenu();
+	int displayMenu();
 	int getMinesQuant();
 	int getBoardSize();
 	void goodbye();
