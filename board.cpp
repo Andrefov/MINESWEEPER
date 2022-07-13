@@ -1,6 +1,5 @@
 #include "Board.h"
 
-
 Board::Board(int y, int x, int size, int minesNumber){
 	std::random_device rng;																	//
 	std::mt19937 minePlanter(rng());														// <- preparing random engine
@@ -31,6 +30,13 @@ Board::Board(int y, int x, int size, int minesNumber){
 	}
 }
 
+
+Tile* Board::getTile(int y, int x)
+{
+	Tile* ptr = &board[y][x];
+	return ptr;
+}
+
 void Board::setTilesAround() {
 	int yPos = 0;
 	int xPos = 0;
@@ -47,9 +53,9 @@ void Board::setTilesAround() {
 	}
 }
 
-void Board::fieldReveal(int x, int y)
+void Board::fieldReveal(int x, int y, Board* board)
 {
-	Tile* t = board.getTile(x, y);
+	Tile *t = board->getTile(x, y);
 	if (t->getStatus() != 1) {
 
 		t->setStatus(1);
@@ -61,14 +67,12 @@ void Board::fieldReveal(int x, int y)
 					if (i >= 0 && i < size_
 						&& j >= 0 && j < size_
 						&& !(i == x && j == y)) {
-						fieldReveal(i, j);
+						fieldReveal(i, j, board);
 					}
 				}
 			}
 		}
 	}
-	
-
 }
 
 

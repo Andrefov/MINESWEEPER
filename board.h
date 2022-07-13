@@ -1,3 +1,4 @@
+#pragma once
 #include <array>
 #include <random>
 #include <iostream>
@@ -18,10 +19,12 @@ private:
 	
 public:
 	void displayBoard();
-	//konstruktor kopiujacy
 	Board(int y, int x, int size, int minesNumber);
 	Tile* getTile(int y, int x);
 	void setTilesAround();
-	void fieldReveal(int x,int y);
-	vector<> getNeighbors();
+	void fieldReveal(int x,int y, Board *board_);
+	//vector<> getNeighbors();
 };
+
+
+

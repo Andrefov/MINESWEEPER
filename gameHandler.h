@@ -1,4 +1,8 @@
 #pragma once
+#include <iostream>
+#include<string>
+#include"board.h"
+
 class gameHandler
 {
 	int x;
