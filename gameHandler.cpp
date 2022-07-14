@@ -124,7 +124,7 @@ void GameHandler::getCoordinates(int boardSize) {
         number = stoi(coordinates) - 1;
 
         if (number >= boardSize) {
-            std::cout << "Enter a number that is less than the size of the array"
+            std::cout << "Enter a number that is less than the size of the array" << std::endl;
             continue;
         }
         break;
