@@ -77,14 +77,17 @@ bool GameHandler::checkNumbers(char c){
     return false;
 }
 
-bool GameHandler::chceckLetters(char c) {
-    if (((c >= 'A') && (c <= 'Z')) || ((c >= 'a') && (c <= 'z')))
+bool GameHandler::chceckLetters(char c, int boardSize) {
+    if (((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) && ((c <= 'a' + boardSize) || (c <= 'A' + boardSize)))
         return true;
     return false;
 }
 
-void GameHandler::getCoordinates() {
+void GameHandler::getCoordinates(int boardSize) {
     std::string coordinates;
+    int letter;
+    int number;
+
     while (true) {
         std::cout << "Input coordinates (e.x A1): " << std::endl;
 
@@ -98,28 +101,38 @@ void GameHandler::getCoordinates() {
             continue;
         }
         //sprawdzam czy litera jest pierwsza
-        else if (chceckLetters(coordinates[0]) == 0) {
-            std::cout << "Input a letter (the size of the letter is irrelevant)!" << std::endl;
+        else if (chceckLetters(coordinates[0], boardSize) == 0) {
+            std::cout << "enter the letter contained in the board (the size of the letter is irrelevant)!" << std::endl;
             continue;
         }
-        //sprawdzam czy na drugim miejscu jest cyfra
-        else if (checkNumbers(coordinates[1]) == 0) {
-            std::cout << "Input a proper number!" << std::endl;
-            continue;
-        }
-        //jak wyzej
-       // else if (checkNumbers(coordinates[2]) == 0)
-           // continue;
+        letter = toupper(coordinates[0]) - 65;
+        coordinates.erase(0, 1);
 
+        if (coordinates.size() < 2) {
+            if (checkNumbers(coordinates[0]) == 0) {
+                std::cout << "Enter a number"<<std::endl;
+                continue;
+            }
+        }
+        else {
+            if ((checkNumbers(coordinates[0]) && checkNumbers(coordinates[1])) == 0) {
+                std::cout << "Enter a number"<<std::endl;
+                continue;
+            }
+        }
+
+        number = stoi(coordinates) - 1;
+
+        if (number >= boardSize) {
+            std::cout << "Enter a number that is less than the size of the array"
+            continue;
+        }
         break;
     }
-    std::string number;
-    int num;
-    number += coordinates[1];
-    number += coordinates[2];
-    num = stoi(number) - 1;//zmiana typu zmiennej (string do int)
-    y = toupper(coordinates[0]) - 65;//zmiana litery na odpowiednia cyfre
-    x = num;
+
+    x = toupper(letter) - 65;
+    y = number;
+
 }
 
 void GameHandler::winningSign() {
