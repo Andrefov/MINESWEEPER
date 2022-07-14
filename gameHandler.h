@@ -10,12 +10,12 @@ class GameHandler
 	int mines;
 
 public:
-	void getCoordinates(int *y, int *x);
+	void getCoordinates();
 	bool checkNumbers(char c);
 	bool chceckLetters(char c);
 	void markMine(int y, int x, Board* myBoard, int status); // decrementuje int mines
-	void action(Board* myBoard);
-	bool winCondition(); // je¿eli mines = 0
+	void action(Board* myBoard, int switch_);
+	bool winCondition(Board* myBoard); // je¿eli mines = 0
 	bool loseCondition(Board* myBoard);
 	void winningSign();
 	void losingSign();

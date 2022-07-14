@@ -11,8 +11,8 @@ void GameHandler::markMine(int y, int x, Board* myBoard, int status)
     t->setStatus(status);
 }
 
-void GameHandler::action(Board* myBoard)
-{
+void GameHandler::action(Board* myBoard, int switch_)
+    {
     std::string action;
     std::cout << "What do you want to do? Type \"discover\" to discover the field, \"mark\" to marka a filed as flag or \"unmark\" to unmark the field" << std::endl;
     while (true) {
@@ -20,15 +20,20 @@ void GameHandler::action(Board* myBoard)
         std::cin >> action;
 
         if ((action == "discover") || (action == "d")) {
-            getCoordinates(&y, &x);
-            myBoard->fieldReveal(y, x);
+            getCoordinates();
+            if (switch_ == 0) {
+                myBoard->fieldReveal(y, x);
+                break;
+            }
+            break;
         }
         else if ((action == "mark") || (action == "m")) {
-            getCoordinates(&y, &x);
+            getCoordinates();
             Tile* t = myBoard->getTile(y, x);
             if (t->getStatus() == 0) {
                 markMine(x, y, myBoard, 9);
                 mines++;
+                break;
             }
             else {
                 std::cout << "You can't mark the discoverd field!" << std::endl;
@@ -36,11 +41,12 @@ void GameHandler::action(Board* myBoard)
             }
         }
         else if ((action == "unmark") || (action == "u")) {
-            getCoordinates(&y, &x);
+            getCoordinates();
             Tile* t = myBoard->getTile(y, x);
             if (t->getStatus() == 9) {
                 markMine(x, y, myBoard, 0);
                 mines--;
+                break;
             }
             else {
                 std::cout << "You can't unmark the field you didn't mark earlier!" << std::endl;
@@ -54,18 +60,18 @@ void GameHandler::action(Board* myBoard)
     }
 }
 
-bool gameHandler::loseCondition(Board* myBoard)
-{
+bool GameHandler::loseCondition(Board* myBoard){
     Tile* t = myBoard->getTile(y, x);
     if (t->getTileType() == 1)
         return true;
     return false;
 }
 
+bool GameHandler::winCondition(Board* myBoard) {
+    return false;
+}
 
-
-bool gameHandler::checkNumbers(char c)
-{
+bool GameHandler::checkNumbers(char c){
     if (c >= '0' && c <= '9')
         return true;
     return false;
@@ -77,11 +83,10 @@ bool GameHandler::chceckLetters(char c) {
     return false;
 }
 
-
-void GameHandler::getCoordinates(int* y, int* x) {
+void GameHandler::getCoordinates() {
     std::string coordinates;
     while (true) {
-        std::cout << "Input coordinates: " << std::endl;
+        std::cout << "Input coordinates (e.x A1): " << std::endl;
 
         std::cin >> coordinates;
         if (coordinates == "Exit" || coordinates == "exit")
@@ -103,20 +108,18 @@ void GameHandler::getCoordinates(int* y, int* x) {
             continue;
         }
         //jak wyzej
-        else if (checkNumbers(coordinates[2]) == 0)
-            continue;
+       // else if (checkNumbers(coordinates[2]) == 0)
+           // continue;
 
         break;
     }
-
     std::string number;
     int num;
     number += coordinates[1];
     number += coordinates[2];
     num = stoi(number) - 1;//zmiana typu zmiennej (string do int)
-    *y = toupper(coordinates[0]) - 65;//zmiana litery na odpowiednia cyfre
-    *x = num;
-    
+    y = toupper(coordinates[0]) - 65;//zmiana litery na odpowiednia cyfre
+    x = num;
 }
 
 void GameHandler::winningSign() {
@@ -145,18 +148,19 @@ void GameHandler::losingSign() {
 
 int GameHandler::round() {
     Menu menu;
-    if (menu.displayMenu() == 0) {
+    if (menu.menuChoice() == 0) {
         menu.goodbye();
         return 0;
    }
     Board board_ (menu.getBoardSize());
     board_.displayBoard();
-    getCoordinates(&y, &x);
+    action(&board_, 1);
     board_.plantMines(y, x, menu.getBoardSize(), menu.getMinesQuant());
     board_.setTilesAround();
-    while (winCondition() == false || loseCondition() == false) {
-        action(&board_);
-    }
-   
+    board_.fieldReveal(y, x);
+    while (winCondition(&board_) == false || loseCondition(&board_) == false) {
+        board_.displayBoard();
+        action(&board_, 0);
+    } 
     board_.displayBoard();
 }

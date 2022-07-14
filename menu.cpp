@@ -103,12 +103,6 @@ void Menu::aboutTheGame()
 	system("cls");
 }
 
-
-int Menu::displayMenu()
-{
-	return menuChoice();
-}
-
 int Menu::getMinesQuant() {
 	return minesQuant;
 }

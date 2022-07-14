@@ -5,9 +5,9 @@ int Tile::getMinesNearby()
 	return minesNearby;
 }
 
-void Tile::setMinesNearby(int amount)
+void Tile::setMinesNearby()
 {
-	minesNearby = amount;
+	minesNearby++;
 }
 
 int Tile::getTileType()

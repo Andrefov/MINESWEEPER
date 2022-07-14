@@ -12,9 +12,6 @@ void Board::displayBoard() {
 	}
 	std::cout << std::endl;
 	for (int y = 0; y < board.size(); y++) {
-
-
-
 		for (int x = 0; x < board.size(); x++) { //185 186 187 188 201 202 204
 			if (y == 0 && firstline == 0) {
 				firstLine(y, x);	
@@ -28,7 +25,6 @@ void Board::displayBoard() {
 			else if (y == board.size() - 1 && hseparator == 1 && lastline == 1) {
 				lastLine(y, x);
 			}
-			
 		}
 		if (firstline == 0) {
 			firstline = 1;
@@ -46,15 +42,12 @@ void Board::displayBoard() {
 		else if (hseparator == 0) {
 			hseparator = 1;
 		}
-		
 		std::cout << std::endl;
 	}
-
 }
 
 void Board::firstLine(int y, int x) {
 	if (x == 0) {
-
 		std::cout <<"   " << char(201) << char(205) << char(205) << char(205);
 	}
 	else if (x > 0 && x < board.size() - 1) {
@@ -136,8 +129,7 @@ Board::Board(int size) {
 	
 
 
-Tile* Board::getTile(int y, int x)
-{
+Tile* Board::getTile(int y, int x){
 	Tile* ptr = &board[y][x];
 	return ptr;
 }
@@ -149,13 +141,14 @@ void Board::setTilesAround() {
 	for (int i = 0; i < mines.size(); i++) {
 		yPos = mines[i].y;
 		xPos = mines[i].x;
-		for (int y_ = std::max(0, yPos - 1); y_ < std::min(size_, yPos + 1); y_++) {
-			for (int x_ = std::max(0, xPos - 1); x_ < std::min(size_, xPos + 1); x_++) {
+		for (int y_ = std::max(0, yPos - 1); y_ < std::min(size_, yPos + 2); y_++) {
+			for (int x_ = std::max(0, xPos - 1); x_ < std::min(size_, xPos + 2); x_++) {
 				valueSet = board[y_][x_].getMinesNearby();
-				board[y_][x_].setMinesNearby(valueSet++);
+				board[y_][x_].setMinesNearby();
 			}
 		}
 	}
+	std::cout << "break" << std::endl;
 }
 
 void Board::fieldReveal(int x, int y )
@@ -181,12 +174,14 @@ void Board::fieldReveal(int x, int y )
 }
 
 void Board::plantMines(int y, int x, int size, int mines_) {
+
 	std::random_device rng;																	//
 	std::mt19937 minePlanter(rng());														// <- preparing random engine
 	std::uniform_int_distribution<std::mt19937::result_type> mineCoordinate(0, (size - 1)); //
 	coordinates pushHelper;	
 	int yPos;
 	int xPos;
+	minesNumber = mines_;
 	for (int i = minesNumber; i > 0; i--) {			// mine planting loop
 		yPos = mineCoordinate(minePlanter);
 		xPos = mineCoordinate(minePlanter);

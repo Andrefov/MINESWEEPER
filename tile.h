@@ -8,7 +8,7 @@ private:
 	int status; //zakryta, odkryta, flaga lub iloœæ min
 public:
 	int getMinesNearby();
-	void setMinesNearby(int amount);
+	void setMinesNearby();
 	int getTileType();
 	void setTileType(int isBomb);
 	int getStatus();
