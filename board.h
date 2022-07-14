@@ -14,6 +14,7 @@ private:
 	};
 	int size_;
 	int minesNumber;
+	int revealedField;
 	std::vector<std::vector <Tile>> board;
 	std::vector<coordinates> mines;
 	
@@ -29,6 +30,9 @@ public:
 	void setTilesAround();
 	void fieldReveal(int x,int y);
 	void plantMines(int x, int y, int size, int minesNumber);
+	int getBoardSize();
+	int getMinesNumber();
+	int getRevealedFields();
 	//vector<> getNeighbors();
 };
 

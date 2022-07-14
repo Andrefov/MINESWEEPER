@@ -1,6 +1,7 @@
 #include "Board.h"
 
 void Board::displayBoard() {
+	system("cls");
 	int firstline = 0;
 	int lastline = 0;
 	int hseparator = 1;
@@ -105,10 +106,10 @@ void Board::printTile(int y, int x) {
 	else if (board[y][x].getMinesNearby() == 0 && board[y][x].getStatus() == 1 && board[y][x].getTileType() == 0) {
 		std::cout << ' ';
 	}
-	else if (board[y][x].getStatus() == 0 && board[y][x].getStatus() != 9) {
+	else if (board[y][x].getStatus() == 0) {
 		std::cout << char(178);
 	}
-	else if (board[y][x].getStatus() == 0 && board[y][x].getStatus() == 9) {
+	else if (board[y][x].getStatus() == 9) {
 		std::cout << 'F';
 	}
 	else if (board[y][x].getTileType() == 1 && board[y][x].getStatus() == 1) {
@@ -125,6 +126,7 @@ Board::Board(int size) {
 		}										//
 		board.push_back(vBuildHelper);			//
 	}
+	revealedField = 0;
 }
 	
 
@@ -148,15 +150,15 @@ void Board::setTilesAround() {
 			}
 		}
 	}
-	std::cout << "break" << std::endl;
 }
 
-void Board::fieldReveal(int x, int y )
+void Board::fieldReveal(int x, int y)
 {
-	Tile *t = &board[x][y];
-	if (t->getStatus() != 1) {
+	Tile* t = &board[x][y];
+	if (t->getStatus() != 1 && t->getStatus() != 9) {
 
 		t->setStatus(1);
+		revealedField++;
 
 		if (t->getTileType() == 0 && t->getMinesNearby() == 0) {
 
@@ -195,4 +197,16 @@ void Board::plantMines(int y, int x, int size, int mines_) {
 			mines.push_back(pushHelper);
 		}
 	}
+}
+
+int Board::getBoardSize() {
+	return size_;
+}
+
+int Board::getMinesNumber() {
+	return minesNumber;
+}
+
+int Board::getRevealedFields() {
+	return revealedField;
 }

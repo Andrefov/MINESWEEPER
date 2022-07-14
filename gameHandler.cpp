@@ -14,25 +14,27 @@ void GameHandler::markMine(int y, int x, Board* myBoard, int status)
 void GameHandler::action(Board* myBoard, int switch_)
     {
     std::string action;
-    std::cout << "What do you want to do? Type \"discover\" to discover the field, \"mark\" to marka a filed as flag or \"unmark\" to unmark the field" << std::endl;
+    std::cout << "What do you want to do? Type \"discover\" to discover the field, \"mark\" to mark a field as flag or \"unmark\" to unmark the field" << std::endl;
     while (true) {
         std::cout << ">>";
         std::cin >> action;
 
         if ((action == "discover") || (action == "d")) {
-            getCoordinates();
+            getCoordinates(myBoard->getBoardSize());
             if (switch_ == 0) {
                 myBoard->fieldReveal(y, x);
+                moveType = 0;
                 break;
             }
             break;
         }
         else if ((action == "mark") || (action == "m")) {
-            getCoordinates();
+            getCoordinates(myBoard->getBoardSize());
             Tile* t = myBoard->getTile(y, x);
             if (t->getStatus() == 0) {
-                markMine(x, y, myBoard, 9);
+                markMine(y, x, myBoard, 9);
                 mines++;
+                moveType = 1;
                 break;
             }
             else {
@@ -41,11 +43,12 @@ void GameHandler::action(Board* myBoard, int switch_)
             }
         }
         else if ((action == "unmark") || (action == "u")) {
-            getCoordinates();
+            getCoordinates(myBoard->getBoardSize());
             Tile* t = myBoard->getTile(y, x);
             if (t->getStatus() == 9) {
-                markMine(x, y, myBoard, 0);
+                markMine(y, x, myBoard, 0);
                 mines--;
+                moveType = 2;
                 break;
             }
             else {
@@ -60,15 +63,28 @@ void GameHandler::action(Board* myBoard, int switch_)
     }
 }
 
-bool GameHandler::loseCondition(Board* myBoard){
-    Tile* t = myBoard->getTile(y, x);
-    if (t->getTileType() == 1)
+bool GameHandler::loseCondition(Board* myBoard, int moveType){
+    if (myBoard->getTile(y, x)->getTileType() == 1 && moveType == 0) {
+        myBoard->getTile(x, y)->setStatus(1);
+        myBoard->displayBoard();
+        losingSign();
         return true;
-    return false;
+    }
+    else {
+        return false;
+    }
 }
 
 bool GameHandler::winCondition(Board* myBoard) {
-    return false;
+    int temp = pow(myBoard->getBoardSize(), 2);
+    if ((pow(myBoard->getBoardSize(), 2) - myBoard->getMinesNumber()) == myBoard->getRevealedFields()) {
+        myBoard->displayBoard();
+        winningSign();
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 bool GameHandler::checkNumbers(char c){
@@ -92,9 +108,10 @@ void GameHandler::getCoordinates(int boardSize) {
         std::cout << "Input coordinates (e.x A1): " << std::endl;
 
         std::cin >> coordinates;
-        if (coordinates == "Exit" || coordinates == "exit")
+        if (coordinates == "Exit" || coordinates == "exit") {
+            goodbye();
             exit(0);
-
+        }
         //sprawdzam czy jest litera i conajwyzej 2cyfry
         if (coordinates.size() > 3) {
             std::cout << "Enter one letter and number" << std::endl;
@@ -120,19 +137,16 @@ void GameHandler::getCoordinates(int boardSize) {
                 continue;
             }
         }
-
         number = stoi(coordinates) - 1;
 
         if (number >= boardSize) {
-            std::cout << "Enter a number that is less than the size of the array"
+            std::cout << "Enter a number that is less than the size of the array";
             continue;
         }
         break;
     }
-
-    x = toupper(letter) - 65;
+    x = letter;
     y = number;
-
 }
 
 void GameHandler::winningSign() {
@@ -159,6 +173,18 @@ void GameHandler::losingSign() {
 
 };
 
+void GameHandler::goodbye() {
+    system("cls");
+    std::cout << " (                     (         )                \n";
+    std::cout << " )\\ )                  )\\ )   ( /(   (        (   \n";
+    std::cout << "(()/(      (     (    (()/(   )\\())  )\\ )    ))\\  \n";
+    std::cout << " /(_))_    )\\    )\\    ((_)) ((_)\\  (()/(   /((_) \n";
+    std::cout << "(_)) __|  ((_)  ((_)   _| |  | |(_)  )(_)) (_))   \n";
+    std::cout << "  | (_ | / _ \\ / _ \\ / _` |  | '_ \\ | || | / -_)  \n";
+    std::cout << "   \\___| \\___/ \\___/ \\__,_|  |_.__/  \\_, | \\___|  \n";
+    std::cout << "                                     |__/         \n";
+}
+
 int GameHandler::round() {
     Menu menu;
     if (menu.menuChoice() == 0) {
@@ -171,9 +197,9 @@ int GameHandler::round() {
     board_.plantMines(y, x, menu.getBoardSize(), menu.getMinesQuant());
     board_.setTilesAround();
     board_.fieldReveal(y, x);
-    while (winCondition(&board_) == false || loseCondition(&board_) == false) {
+    while (loseCondition(&board_, moveType) == false && winCondition(&board_) == false) {
         board_.displayBoard();
         action(&board_, 0);
+
     } 
-    board_.displayBoard();
 }
